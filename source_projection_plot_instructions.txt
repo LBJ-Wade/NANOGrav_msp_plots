@@ -1,0 +1,28 @@
+#################### Instructions for running source_projection_plot.ipynb #######################
+
+1. Download "source_projection_plot.ipynb" and "plot2.py" to oyur local machine.
+
+
+2. Install Anaconda distribution for easy ipython notebook compatability: https://www.anaconda.com/download/
+
+
+3. In the Anaconda terminal, type the command: 
+
+	conda create -n my_root --clone="C:\ProgramData\Anaconda2"
+
+This will give you permission to use the root terminal, allowing you to install packages like basemap.
+
+
+4. In the my_root terminal, type: 
+	
+	conda install basemap
+
+This will downloand and install the basemap module necessary for the projection plot.
+
+
+5. Then, type:
+
+	jupyter notebook
+
+This will open a localhost connection to your ipython notebook, allowing you to access all of your personal files and \
+also to run "source_projection_plot.ipynb" on your own machine.
