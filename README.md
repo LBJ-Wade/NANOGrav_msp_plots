@@ -1,2 +1,2 @@
-# nanograv_stuff
+# NANOGrav_projects
 work relating to NANOGrav
