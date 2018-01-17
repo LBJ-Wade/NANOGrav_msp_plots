@@ -1,9 +1,9 @@
 # NANOGrav_projects
 Description of scripts:
 
-**AO_nanograv_source_projection_12-2017.ipynb** = Projection of all NANOGrav sources with Arecibo observation sessions (as of 1/18).
+**AO_nanograv_source_projection_12-2017.ipynb** = Projection of all NANOGrav sources with Arecibo observation sessions (as of 12/17).
 
-**GBT_nanograv_source_projection_12-2017.ipynb** = Projection of all NANOGrav sources with GBT observation sessions (as of 1/18).
+**GBT_nanograv_source_projection_12-2017.ipynb** = Projection of all NANOGrav sources with GBT observation sessions (as of 12/17).
 
 **source_projection_plot.ipynb** = General script for making mollweide projection plots.
 
