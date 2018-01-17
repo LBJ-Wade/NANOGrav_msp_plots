@@ -9,6 +9,6 @@
 
 **GBT_NANOGrav_Man_v10.tex** = GBT NANOGrav Timing Observation Manual (as of 12/17).
 
-**plot2.py** = An import for all of the source projection plots above.
+**plot2.py** = An import for all of the source projection plots above. *(not made by me)*
 
 
