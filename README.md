@@ -1,5 +1,5 @@
 # NANOGrav_projects
-Work relating to NANOGrav:
+Description of scripts:
 
 **AO_nanograv_source_projection_12-2017.ipynb** = Projection of all NANOGrav sources with Arecibo observation sessions (as of 1/18).
 
