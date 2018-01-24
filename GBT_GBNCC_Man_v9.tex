@@ -1,0 +1,798 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1.0in]{geometry}                % See geometry.pdf to learn the layout options. There are lots.
+%\geometry{letterpaper}                   % ... or a4paper or a5paper or ... 
+%\geometry{landscape}                % Activate for for rotated page geometry
+%\usepackage[parfill]{parskip}    % Activate to begin paragraphs with an empty line rather than an indent
+\usepackage{graphicx}
+\usepackage{subfigure}
+\usepackage{amssymb}
+%\usepackage{epstopdf}
+%\epstopdfsetup{outdir=./}
+\usepackage{amsmath}
+\usepackage{hyperref}
+\hypersetup{colorlinks=true}             %Activate to enable cross refrence and url color coding
+  	\hypersetup{linkcolor=red}
+	\hypersetup{urlcolor=blue}
+\usepackage{enumerate}
+%\usepackage{gensymb}
+\DeclareGraphicsRule{.tif}{png}{.png}{`convert #1 `dirname #1`/`basename #1 .tif`.png}
+%\usepackage{natbib}
+
+\setlength{\parindent}{15pt}
+\setcounter{tocdepth}{2}
+
+\begin{document}
+
+\title{Green Bank Telescope Observing Manual -- \\
+ GBNCC Survey Sessions}
+\author{Ren\'ee Spiewak, Zach Komassa}
+
+\date{\today}                                           % Activate to display a given date or no date
+
+\maketitle 
+\pagenumbering{gobble}
+\tableofcontents
+%\clearpage
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Introduction} %%%%%%%%%%%%%% Section 1 %%%%%%%%%%%%%%
+This is by no means a comprehensive guide to GBT observing.  Any suggestions for revisions should be sent to \href{mailto:arcc.uwm@nanograv.org}{arcc.uwm@nanograv.org}.  
+
+
+\subsection{The GBNCC Survey Project}\pagenumbering{arabic} %%%%%%%%% Section 1.1 %%%%%%%%%
+The primary goal of the Green Bank North Celestial Cap (GBNCC) survey project is to find pulsars in the Northern Celestial Hemisphere (Dec $>40$ degrees), but the survey has run for several years now, and is currently observing in the Southern Hemisphere.  The final result will be complete coverage of the sky visible to the GBT (Dec $>-46$ degrees).  The survey uses the 342 receiver, which has a central frequency of 350\,MHz, and a bandwidth of approximately 100\,MHz.  As of November 2017, 156 pulsars have been discovered\footnote{\url{http://arcc.phys.utb.edu/gbncc/}}, including 20 millisecond pulsars (MSPs) and 11 rotating radio transients (RRATs), making this one of the most successful pulsar surveys to date.  
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Quick Steps}\label{sec:quick}  %%%%%%%%%%%%%% Section 2 %%%%%%%%%%%%%%
+\textit{For use during observing sessions.}  For full details, start at section~\ref{sec:b4}.  
+
+%%%%%%%%%%%%%%%%
+\subsection{Setting Up}\label{ssec:qa} %%%%%%%%% Section 2.1 %%%%%%%%%
+\subsubsection{In-Browser VNC Setup}\label{sssec:new} %2.1.1
+\begin{enumerate}
+\item Using Mac, Linux, or Windows: 
+ \begin{enumerate}
+  \item Connect to the in-browser VNC platform via the link below: (Chrome or Firefox are preferable)\\ 
+  \href{https://ssh.gb.nrao.edu:3443/auth/ssh}{https://ssh.gb.nrao.edu:3443/auth/ssh}
+  \item Enter your GBT login credentials as prompted.
+  \item After logging in succesfully, click the blue [Launch Session] button towards the top left corner of the page.
+  \item Choose the option [titania], then click the [Launch] button. Once launched, a new tab will open in your browser---this is the VNC viewer.
+  \item Enter your GBT login credentials as prompted in the VNC viewer.\\
+ \end{enumerate}
+\end{enumerate}
+
+\noindent Skip to section \ref{VNC:stuff} and continue from there. {\bfseries {Do not perform the steps in \ref{sssec:old} if you have already performed the steps in this section.}}
+
+\subsubsection{Traditional VNC Setup}\label{sssec:old} %2.1.2
+\begin{enumerate}
+ \item \begin{enumerate}
+  \item\label{st:vnc} %1a
+  If you're running Mac or Linux: 
+  
+  Open a terminal on the local computer and type: \\
+  \indent\texttt{ssh [UNAME]@stargate.gb.nrao.edu} \\ 
+  (where [UNAME] is your GBT account username) \\
+  {\tt ssh titania \\
+  \indent vncserver -geometry 1920x1200} \\
+  Note the VNC server number [n] printed to the terminal (e.g., titania:[n]).  
+  \begin{itemize}
+   \item\label{st:open} %1a*
+   For Linux systems: 
+   
+   Open a new terminal tab on the local computer, and type: \\
+   \indent\texttt{ssh -L titania.gb.nrao.edu:59[nn] [UNAME]@stargate.gb.nrao.edu} \\
+   For [nn], enter the VNC server number as two digits, e.g., 01 or 12.
+
+   Open a new terminal on the local computer and type: \\
+   \texttt{vncviewer -shared localhost:[n]} \\
+   For [n] enter the VNC server number (e.g., 1 or 12). 
+  
+   \item %1a*
+   For Mac systems: 
+   
+   Open a new terminal on the local computer, and type: \\
+   \texttt{ssh -L 59[nn]:titania.gb.nrao.edu:59[nn] [UNAME]@stargate.gb.nrao.edu} \\
+   For [nn], enter the VNC server number as two digits, e.g., 01 or 12. 
+
+   Open Chicken of the VNC and enter the following parameters: \\
+   \textbf{Host: localhost \\
+   Display: [n] \\
+   Password: [VNC PASSWORD] \\
+   Check ``Allow Other Clients". }
+
+   Click [Connect].
+  \end{itemize}
+
+  \item\label{st:win} %1b
+  For Windows systems: (For full instructions, see Sec.~\ref{ssec:vncw})
+
+  \begin{enumerate}
+   \item Open PuTTY.
+   \item Load saved GBT session, and click Open.
+   \item In PuTTY terminal, enter password, and type: \\
+   \texttt{ssh titania\\
+   vncserver -geometry 1920x1200}\\
+   Note VNC server number [n]. 
+   \item Close terminal. 
+   \item\label{st:op1} Open PuTTY.
+   \item Load saved GBT session.
+   \item Under the Tunnels tab, enter ``59[nn]" as Source Port and ``titania:59[nn]" as Destination. \\
+   For [nn], enter the vnc server number as two digits, e.g., 01 or 12.
+   \item Click Add.
+   \item Open VNC Viewer and type:\\
+   localhost:[n]\\
+   Here the vnc server number [n] can be a single digit, e.g., 1 or 12. 
+   \item Click Connect.
+  \end{enumerate}
+ \end{enumerate}
+\end{enumerate}
+
+  Start from step\,v when taking over from another observer.
+
+\subsubsection{Set up Observing Programs}\label{VNC:stuff} %2.1.3
+\begin{enumerate}
+ \item \begin{enumerate}%2
+  \item In the VNC window, open a new terminal and type: \\ %a
+  \texttt{cleo} \\
+  A window with an image with the text ``Cleo" should appear. 
+  \item Open \textit{Talk and Draw}: \\
+  Click the [Cleo] image, then click [Observer Tools] and select [Talk and Draw]. %b
+  \item Greet the operator in \textit{Talk and Draw}, and let them know you are doing the GBNCC observation in [X] minutes with the 350\,MHz receiver.  %c
+ \end{enumerate}
+
+ \item Open a new terminal tab in the VNC viewer, and enter: \\ %3
+ \texttt{ssh -X beef} \\
+ Enter password.  
+ 
+ If your terminal does not say ``Setting up GUPPI environment" or something similar, type: \\
+ {\tt source /opt/64bit/guppi/guppi\_daq/guppi.bash} \\
+ \texttt{cd /users/sransom/GBNCC/ \\
+ ls YYYYMM*.observed} \\
+ Check for sessions run earlier that day. Make the catalog for your session by typing: \\
+ \texttt{python make\_catalog.py [LST] [LENGTH] > catalogs/GBNCC\_[YYYYMMDDa].cat} \\
+ where [YYYYMMDD] is the date of your observing session, the [LST] and [LENGTH] of the session are from the email, and the optional minuscule letter [a] differentiates multiple sessions on one day.  
+ 
+ \item Check disk space by typing: \\ %4
+ \texttt{df -h /data$^*$}
+
+ 6 hours of observing produces approximately 1\,Tb of data, so make sure you have enough space. 
+ 
+ \item Enter commands in Astrid. %5
+ \begin{enumerate}
+  \item\label{st:ast} Open a new terminal tab in the VNC viewer, and type: \\ %5a
+  \texttt{astrid} 
+
+  Once Astrid loads, it will ask if you want control of the telescope; check ``Work offline".
+  
+  \item In Astrid, enter ``AGBT17B\_325" into the ``Project:" field and press enter. A list of scheduling blocks should appear. %b
+  \item In the \textbf{A\_test\_MSPs} scheduling block, edit the following: %c
+
+  \begin{itemize}
+   \item \texttt{do\_cal=False} 
+   \item \texttt{test\_scan\_time=$5^*60+5$}
+   \item \texttt{pause\_for\_adc\_hist=True} 
+   \item \texttt{datadisk=data[n]} \\
+   where [n] is the number for the data disk with more available space. 
+  \end{itemize}
+  
+  \item Select a test source from the list %d
+  (suggestions typically sent around in email; otherwise, select a source near the top of the list with RA close to the LST). 
+
+  \item Click [Save to Database]. %e
+  \item Open the \textbf{B\_config\_search} scheduling block, edit the \texttt{guppi.datadisk=data[n]} line as above. %f
+  \item Click [Save to Database]. %g
+  \item Open the \textbf{C\_run\_survey} scheduling block, edit the catalog filename (using the date of your session), and make sure \texttt{number\_run=0}. %h
+  \item Click [Save to Database]. %i
+  \item Edit the ``Run" tab, in Astrid within ``Observation Management", for the following: \\ %j
+  \indent\textbf{Project name = AGBT17B\_325 \\
+  \indent Observer Name} (see Sec.~\ref{ssec:prob} for problems)\\
+  \indent \textbf{Operator Name} \\
+  Stop! Wait for the operator to tell you to proceed.
+ \end{enumerate}
+\end{enumerate}
+
+%%%%%%%%%%%%%%%%%
+\subsection{Observing}\label{ssec:qb}  %%%%%%%%% Section 2.2 %%%%%%%%%
+\begin{enumerate}
+ \item Once the operator says it's ok, take control in Astrid by clicking [File] then [Real Time Mode] and check ``Work Online with Control of the Telescope". Click [Yes] to increment session number. %1
+ \item In the ``Run" tab in Astrid, submit the \textbf{A\_test\_MSPs} scheduling block.  \\ %2
+ After the telescope slews to the source, a window will appear in Astrid prompting you to check the levels in \textbf{guppi\_adc\_hist}, but \textbf{\textit{do not}} click anything in this window yet.
+ \item \label{st:adc1} In a \textit{beef} terminal tab, type: \\ %3
+ \texttt{guppi\_adc\_hist}
+
+ A window should pop up showing two overlapping Gaussian curves. The Gaussians should go to zero within the range $-127$ to 127; a good width is $-20$ to 20. 
+ See Figure~\ref{fig:gah} for a good example. \begin{enumerate}
+  \item If all is well, in the terminal, press \texttt{crtl+c} to close \textbf{guppi\_adc\_hist}.  Click [Yes] in the prompt window for Astrid.  %3a
+  \item If the histogram does not fit the description, close the window (or press \texttt{crtl+c} in the terminal).  Click [No] in the Astrid prompt window.  Resubmit the scheduling block, and recheck \textbf{guppi\_adc\_hist}. %3b
+  \item If the histogram doesn't look right after resubmitting the scheduling block, click [No], and tell the operator something is wrong with GUPPI.  They likely need to contact Scott to fix the problem.  See section~\ref{ssec:prob}, step~\ref{st:gah} for more details. %3c
+ \end{enumerate}
+
+ \item Submit the \textbf{B\_config\_search} and \textbf{C\_run\_survey} scheduling blocks. %4
+ \item Monitor the session. %5
+ \begin{enumerate}
+  \item Open the \textit{Scan Coordinator} from ``Cleo" (drop-down menu, near the top).  Keep an eye on this for any issues, and time left in scans. %5a
+  \item To view the status of GUPPI, in a terminal tab on \textit{beef}, type: \\ %b
+  \texttt{guppi\_status}
+  \item\label{st:files} Check the sizes of the most recent files written to disk by typing: \\ %c
+  \texttt{cd /data[n]/[UNAME]/AGBT17B\_325/[YYYYMMDD]/ \\
+  ls -ltrh | tail -10}
+   \item To check the bandpass, in a terminal tab on \textit{beef}, type: \\ %d
+  \texttt{guppi\_monitor} \\
+  Do not run this for long. 
+ \end{enumerate}
+\end{enumerate}
+
+%%%%%%%%%%%%%%%%
+\subsection{Ending the Session} \label{ssec:qc}  %%%%%%%%% Section 2.3 %%%%%%%%%
+\begin{enumerate}
+ \item The \textbf{C\_run\_survey} scheduling block will not automatically stop.  To end, click [Abort] while the Telescope is slewing to a new pointing, if you have less than 2 minutes of time left.  If you Abort after the last scan starts, there will be a partial observation to remove in later steps.  
+ \item In Astrid, click the ``Observation Management" tab, then go offline via [File] then [Real Time Mode] and check work offline.  Close Astrid.  
+ \item Tell the operator that you are done.  Close ``Cleo" and associated tools. 
+ \item To make a .observed file, in terminal tab from step~\ref{st:files}, type: \\
+ \texttt{/bin/ls -altr *GBNCC*fits > /users/sransom/GBNCC/[YYYYMMDD].observed}
+ \item Edit the .observed file to remove any partial observations. Type: \\
+ \texttt{emacs /users/sransom/GBNCC/[YYYYMMDD].observed} \\
+ Remove any partial pointings. 
+ \item If there is no GBNCC session for a few hours (around half the length of the session you ran), move the data: \begin{enumerate}
+  \item Open a new terminal tab
+  \item \texttt{ssh zuul05} \\
+  Enter password
+  \item Check data present (to avoid writing over anything):
+  \texttt{cd /lustre/gbncc \\
+  ls} 
+  \item \textit{If there are partial files to remove}: \\
+  Find scan number(s) for partial file(s): \\(e.g., for ``guppi\_57470\_GBNCC86803\_0045\_0001.fits", [NUM] is 0045). \\
+  Add \texttt{--exclude "guppi\_$^*$[NUM]$^*$fits"} (with quotation marks around file name) to the rsync command (below) between \texttt{rsync -avuxP} and \texttt{beef\dots}
+  \item If directory [YYYYMMDD] (the date of your session) exists: \\
+  \texttt{mkdir [YYYYMMDDa]} \\
+  e.g., 20160323b (increment minuscule letter as needed). \\
+  \texttt{chmod 1777 [YYYYMMDDa] \\
+  cd [YYYYMMDDa] \\
+  rsync -avuxP beef.gb.nrao.edu::data[n]/[UNAME]/AGBT17B\_325/[YYYYMMDD]/$^*$\,.} \\
+  \textit{Don't forget the period at the end of the line.}
+  \item If directory doesn't exist: \\
+  \texttt{rsync -avuxP beef.gb.nrao.edu::data[n]/[UNAME]/AGBT17B\_325/[YYYYMMDD]\,.}  \\
+  \textit{Don't forget the period at the end of the line.} \end{enumerate}
+ \item Close VNC window
+ \item Send out an email to the GBNCC group summarizing the session. 
+ \item A few hours later, open the VNC again (Sec.~\ref{sssec:new} or \ref{sssec:old})\begin{itemize}
+  \item If rsync is finished, close all windows
+  \item Close VNC window \end{itemize}
+ \item Kill the vncserver, using a local terminal logged into \textit{titania}, by typing: \\
+ \indent\texttt{vncserver -kill :[n]} \\
+ Here [n] refers to your VNC server number (e.g., 1 or 12).
+ \begin{center} {\bfseries{Or}} \end{center} 
+If using the In-Browser VNC server, simply terminate the window on the ``My Sessions'' webpage by clicking the [x] at the top right corner of the appropriate VNC session.
+
+\end{enumerate}
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+
+\section{Before The Session}\label{sec:b4}  %%%%%%%%%%%%%% Section 3 %%%%%%%%%%%%%%
+Go to the GBNCC sign-up page\footnote{\url{http://www2.naic.edu/~palfa/cgi-bin/signup_GBT09C-057/}}
+to sign up for the observation and check length.  
+\textit{Note}: You should also check the GBT scheduling page\footnote{\url{http://dss.gb.nrao.edu/schedule/public}}. 
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{VNC}\label{sec:vnc}  %%%%%%%%%%%%%% Section 4 %%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%
+\subsection{Creating an In-Browser VNC (Mac, Linux, or Windows)}\label{ssec:newvnc} %%%%%%%%% Section 4.1 %%%%%%%%%
+\begin{enumerate}
+ \item Using Chrome or Firefox, connect to:\\ \href{https://ssh.gb.nrao.edu:3443/auth/ssh}{https://ssh.gb.nrao.edu:3443/auth/ssh}
+ \item Enter your GBT login credentials as prompted.
+ \item After logging in, a mostly blank page will appear. Find and click on the blue [Launch Session] button towards the top left corner of the screen.
+ \item A new window will appear, giving the user options for different servers. For observations, always choose the option [titania]. After clicking [titania], click the blue [Launch] button towards the bottom right of the window.
+\item After that, a new browser tab will open with a new VNC viewer. Login with your GBT credentials in the VNC viewer as prompted.\\
+
+Skip to section \ref{sec:begin} after succesfully logging in to the VNC viewer. {\bfseries {Do not perform the ``Traditional'' VNC setup in section \ref{ssec:vnc} if you have already performed the steps in this section.}}
+\end{enumerate}
+
+\subsection{Creating a Traditional VNC}\label{ssec:vnc}  
+Open a secure connection to a GBT computer. \\
+Open a terminal on the local computer and type: \\
+\indent\texttt{ssh [UNAME]@stargate.gb.nrao.edu} \\
+\indent where [UNAME] is the username for the GBT account.  Enter password. \\
+\indent\texttt{ssh titania \\
+\indent vncserver -geometry 1920x1200}
+
+\noindent The output from the last command should return a line that looks like `titania\,:[n]' (e.g., `titania\,:1'). Note the VNC server number, [n].
+
+\noindent The geometry 1920x1200 is the resolution for a medium screen; you can change the dimensions as needed (e.g., 1200x700 for a 13-inch laptop, or 2400x1300 for large iMac monitors).  
+
+\noindent You can also use \textit{euclid} instead of \textit{titania}, but be sure to be consistent.
+
+\noindent If the VNC password is lost, follow these steps: \begin{enumerate}
+
+\item Before opening a VNC server, type in \textit{titania} or \textit{euclid}: \\
+\texttt{rm .vnc/passwd}
+\item Open a VNC server as above.  
+\item When prompted, create a VNC password. 
+\end{enumerate}
+
+
+%%%%%%%%%%%%%%
+\subsection{Viewing a VNC (Linux)} \label{ssec:vncl}  %%%%%%%%% Section 4.2 %%%%%%%%%
+Open a new terminal tab on the local computer and type: \\
+\indent\texttt{ssh -L titania.gb.nrao.edu:59[nn] [UNAME]@stargate.gb.nrao.edu} \\
+For \texttt{[nn]} enter the VNC server number as two digits, (e.g., 01 or 12). After this command no output message will appear in the terminal.  If you are taking over from an observer using \textit{thales} rather than \textit{titania}, the hostname would be ``thales.gb.nrao.edu", with all else the same.  
+
+\noindent Linux distributions may have a VNC viewer already installed. Open a new terminal on the local computer and type: \\
+\indent \texttt{vncviewer -shared localhost:[n]} \\
+For \texttt{[n]} enter the VNC server number (e.g., 1 or 12). Depending on your Linux distribution the \texttt{-shared} option may have different syntax (e.g., \texttt{-Shared}).
+
+%%%
+\subsubsection{Changing VNC Size} \label{sssec:vnc}  %%%%%% Section 4.2.1 %%%%%%
+\noindent If using a VNC session started by someone else and need to change the dimensions, in a terminal \textit{in} the viewer, enter: \\
+\indent\texttt{xrandr} \\
+View the list of possible dimensions, and the current dimensions, at the top, and set the new dimensions using \\
+\indent\texttt{xrandr -s [X]x[Y]} \\
+where [X] is the horizontal dimension and [Y] is the vertical dimension.
+
+
+%%%%%%%%%%%%%%
+\subsection{Viewing a VNC (Mac)}\label{ssec:vncm}  %%%%%%%%% Section 4.3 %%%%%%%%%
+Open a new terminal on the local computer, and type: \\
+\indent\texttt{ssh -L 59[nn]:titania.gb.nrao.edu:59[nn] [UNAME]@stargate.gb.nrao.edu} \\
+For [nn] enter the vnc server number as two digits, (e.g., 01 or 12). After this command no output message will appear in the terminal.  If you are taking over from an observer using \textit{thales} rather than \textit{titania}, the hostname would be ``thales.gb.nrao.edu", with all else the same.  
+
+\noindent Open Chicken of the VNC and enter the following parameters: \\
+\indent\textbf{Host: localhost \\
+\indent Display: [n] \\
+\indent Password: [VNC PASSWORD] \\
+\indent Check allow other clients }
+
+\noindent Click [Connect].
+
+\noindent As an alternative, or if Chicken of the VNC is not installed, you can use Mac's Screen Sharing app. To do so, open finder and select ``Connect to Server..." from the Go menu. Enter the following into the Server Address box: \\
+\indent\texttt{vnc://localhost:59[nn]}
+
+\noindent If using a VNC session started by someone else and need to change the dimensions, see section~\ref{sssec:vnc}. 
+
+
+%%%%%%%%%%%%%
+\subsection{Setting up VNC on Windows}\label{ssec:vncw}  %%%%%%%%% Section 4.4 %%%%%%%%%
+\textit{Requires PuTTY and VNC Viewer} 
+\begin{enumerate}
+\item If this is your first time connecting to GBT with PuTTY: 
+\begin{enumerate}
+\item Open PuTTY. 
+\item Under Host Name (or IP Address), type: \\
+stargate.gb.nrao.edu
+\item Under the Connection tab, click the Data section and enter your username as Auto-Login Username.
+\item Under the SSH tab, uncheck the Enable Compression box.
+\item Under the Session tab, enter a name for the session and click Save, then Open. 
+\item\label{st:nec} In PuTTY terminal, enter password, and type: \\
+\texttt{ssh titania \\
+vncserver -geometry 1920x1200} \\
+You can change the geometry as needed (e.g., 1200x700 or 2400x1300).  Note the VNC server number ``titania:[n]" (e.g., ``titania:1"). 
+\item Close terminal. 
+\item\label{st:op} Open PuTTY.
+\item Load saved GBT session.
+\item Under the Tunnels tab, enter ``59[nn]" as Source Port and ``titania:59[nn]" as Destination. \\
+For \texttt{[nn]}, enter the vnc server number as two digits, e.g., 01 or 12.
+\item Click Add, then click Open
+\item Open VNC Viewer and type:\\
+localhost:[n]\\
+Here the vnc server number [n] can be a single digit, e.g., 1 or 12. 
+\item Click Connect.
+\end{enumerate}
+
+\item If this is not your first time connecting to GBT with PuTTY:
+\begin{enumerate}
+\item Open PuTTY.
+\item Load saved GBT session, and click Open.
+\item Follow steps above starting from step~\ref{st:nec}
+\end{enumerate}
+\end{enumerate}
+
+\noindent If taking over from another observer, start at step~\ref{st:op} and use the VNC information emailed to you.
+
+\noindent If using a VNC session started by someone else and need to change the dimensions, see section~\ref{sssec:vnc}. 
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Beginning an Observing Session} \label{sec:begin}  %%%%%%%%%%%%%% Section 5 %%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%
+\subsection{Open Cleo Tools}\label{ssec:cleo}  %%%%%%%%% Section 5.1 %%%%%%%%%
+In the VNC viewer, open a new terminal and type: \\
+\indent\texttt{cleo}
+
+\noindent A window with an image with the text ``Cleo" should appear. 
+
+\noindent Open \textit{Talk and Draw}: click the [Cleo] image then [Observer Tools] then [Talk and Draw].\\
+
+\noindent Greet the operator in \textit{Talk and Draw}; also, let them know you are doing the GBNCC observation with the 350 MHz receiver.  They may need to move the boom, which could take up to 10 minutes.  If they do not tell you right away, ask who's operating (to complete set-up later).\\
+
+\noindent Open \textit{Scan Coordinator} by clicking on the [Cleo] image and selecting [Scan Coordinator] from the menu.  This contains useful information such as scan length. 
+
+
+%%%%%%%%%%%%%%
+\subsection{Make Catalog}\label{ssec:cat}  %%%%%%%%% Section 5.2 %%%%%%%%%
+\noindent Open a new terminal (or tab) in the VNC viewer and type: \\
+\texttt{ssh -X beef \\
+source /opt/64bit/guppi/guppi\_daq/guppi.bash \\
+cd /users/sransom/GBNCC/} 
+
+\noindent To check if there is a .cat file from a observing session that same day, type: \\
+\texttt{ls /catalogs/GBNCC\_[YYYYMM]$^*$.cat} \\
+where [YYYY] is the year, [MM] is the 2-digit month (and [DD] is the 2-digit day). \begin{itemize}
+\item If there is nothing with the date of your session, type: \\
+\texttt{python make\_catalog.py [LST] [LENGTH] > catalogs/GBNCC\_[YYYYMMDD].cat} \\
+where [LST] and [LENGTH] are in decimal hours \\
+(e.g., \texttt{python make\_catalog.py 14.8 6.25 > catalogs/GBNCC\_20160201.cat})
+\item Otherwise, differentiate the catalogs with minuscule letters (\texttt{a, b, c}...) after the date (e.g., \texttt{GBNCC\_20160201b.cat}). \end{itemize}
+
+\noindent To see the path the telescope will follow, type: \\
+\texttt{gv /tmp/GBNCC\_path[XXXX].ps}\\
+where [XXXX] is replaced by the characters printed to the terminal by the python script (e.g., GBNCC\_pathfs0Ddh.ps).
+
+
+
+%%%%%%%%%%%%
+\subsection{Set Up Astrid}\label{ssec:astrid}  %%%%%%%%% Section 5.3 %%%%%%%%%
+Open Astrid; to do this open a new terminal in the VNC viewer, and ssh into \textit{titania}.  Type: \\
+\indent\texttt{ssh titania} \\
+\indent enter password \\
+\indent\texttt{astrid} \\
+Once Astrid loads, it will ask if you want control of the telescope; check ``Work offline".
+
+\noindent In Astrid, in the ``Observation Management" tab, in the ``Edit" tab, enter ``AGBT17B\_325" into the ``Project:" field and press enter. A list of scheduling blocks should appear. 
+\begin{enumerate}
+ \item In the \textbf{A\_test\_MSPs} scheduling block, edit the following: 
+
+ \begin{itemize}
+  \item \texttt{do\_cal=False}
+  \item \texttt{test\_scan\_time=5*60+5}
+  \item \texttt{pause\_for\_adc\_hist=True} 
+  \item \texttt{datadisk=data[n]} \\
+  where \texttt{[n]} is the number for the data disk with more available space. 
+ \end{itemize}
+
+ \item Hit [Save to Database].
+ \item Open the \textbf{B\_config\_search} scheduling block, edit the \texttt{guppi.datadisk=data[n]} line as above. 
+ \item Hit [Save to Database].
+ \item Open the \textbf{C\_run\_survey} scheduling block, edit the catalog filename (using the date of your session), and make sure \texttt{number\_run=0}. 
+ \item Hit [Save to Database].
+\end{enumerate}
+
+\noindent Edit the ``Run" tab, in Astrid within ``Observation Management", for the following: \\
+\indent\textbf{Project name = AGBT17B\_325 \\
+\indent Observer Name (see Sec.~\ref{ssec:prob} for problems)\\
+\indent Operator Name} \\
+Stop! Wait for the operator to tell you to proceed.
+
+
+%%%%%%%%%%%%
+\subsection{Run the Scheduling Blocks}\label{ssec:sched}  %%%%%%%%% Section 5.4 %%%%%%%%%
+\begin{enumerate}
+ \item Once the operator says it�s ok, take control in Astrid by [File] then [Real Time Mode] and check ``Work online with control of the telescope". It will ask if you would like to increase the session increment, click [Yes].
+ \item In the ``Run" tab in Astrid, within ``Observation Management", submit the \textbf{A\_test\_pulsars} scheduling block.  After the telescope slews to the source, which may take a few minutes (see Sec.~\ref{ssec:prob} for potential problems with slewing), a window will appear in Astrid prompting you to check the levels in \textbf{guppi\_adc\_hist}, but \textbf{\textit{do not}} click anything in this window yet.
+ \item \label{st:adc} In a \textit{beef} terminal tab, type: \\
+ \indent\texttt{guppi\_adc\_hist}
+
+ A window should pop up showing histograms of a small data sample, which should appear like two overlapping gaussians. The gaussians should go to zero within the range $-127$ to 127; a good width is $-20$ to 20. The two lines indicate different polarizations, sampled by different Analog-to-Digital Converters (ADCs).  See Figure~\ref{fig:gah} for a good example.
+
+ \begin{enumerate}
+  \item If all is well, in the terminal, press \texttt{crtl+c} to close \textbf{guppi\_adc\_hist}.  Click [Yes] in the prompt window for Astrid.  
+  \item If the histogram does not fit the description (showing either (a) huge spike(s) at 0, or a clipped gaussian), close the window (or press \texttt{crtl+c} in the terminal).  Click [No] in the Astrid prompt window.  Resubmit the scheduling block, and recheck \textbf{guppi\_adc\_hist}. 
+  \item If the histogram doesn't look right after resubmitting the scheduling block, click [No], and tell the operator something is wrong with GUPPI.  They likely need to contact Scott to fix the problem.  See section~\ref{ssec:prob}, step~\ref{st:gah} for more details.
+ \end{enumerate}
+ 
+ \item If you want to run multiple test sources: \begin{itemize}
+  \item Edit \textbf{A\_test\_MSPs}: \\
+  \texttt{pause\_for\_adc\_hist=False} 
+  \item Comment out the first test source and uncomment another.  If necessary, change the scan time from 3\,min to 5 or 10.  
+  \item Click [Save to Database].
+  \item Resubmit the \textbf{A\_test\_MSPs} scheduling block. 
+  \item Repeat as often as wanted.  Make sure to edit the block after submitting it with the previous source.  Try to be ``quick" and finish editing and submitting a block before the previous block finishes.  \end{itemize}
+
+ \item Submit the \textbf{B\_config\_search} and \textbf{C\_run\_survey} scheduling blocks. 
+ 
+ \item If the session is long enough, you may want to observe a test source a few hours into the session, or at the end.  \begin{enumerate}
+  \item\label{st:AtM} Edit \textbf{A\_test\_MSPs} to change (\texttt{pause\_for\_adc\_hist=False},) test source, and scan time as necessary.  Save to database.
+  \item After a survey scan finishes and the telescope begins slewing to the next pointing, click [Abort].  \begin{itemize}
+   \item If you click [Abort] during a scan, you will create a partial file, which must be considered in various steps at the end (see Sec.~\ref{ssec:rsync}). \end{itemize}
+  \item Submit the \textbf{A\_test\_MSPs} block.  
+  \item If you want to observe more test pulsars before continuing the survey, repeat step~\ref{st:AtM} and resubmit the block as many times as necessary. 
+  \item If you have time for more survey scans, edit \textbf{C\_run\_survey} to change the run number (assume 2\,min for each pointing and add number to last scan started (including partial)) and save to database. \\
+  Submit \textbf{B\_config\_search} and \textbf{C\_run\_survey}. 
+ \end{enumerate}
+\end{enumerate}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{While Observing}  %%%%%%%%%%%%%% Section 6 %%%%%%%%%%%%%%
+
+%%%%%%%%
+\subsection{Monitoring While Observing}  %%%%%%%%% Section 6.1 %%%%%%%%%
+\label{ssec:mon}
+\begin{enumerate}
+ \item Use ``Scan Coordinator" to check that there are no errors in any systems (the Status for the IFRack is often buggy, though; Fig.~\ref{fig:sc}). The ``Time Remaining" can be very useful, but the ``Countdown" can be ignored. 
+ \item To view the status of GUPPI, in a terminal tab on \textit{beef}, type: \\
+ \texttt{guppi\_status} \\
+ In the right column, there are three important lines (see Fig.~\ref{fig:gps}): \begin{itemize}
+  \item \texttt{DISKSTAT} should alternate between \texttt{waiting(nn)} (where \texttt{nn} is some unimportant number that varies) and \texttt{writing}
+  \item \texttt{DROPAVG} should be a very small number, such as 3.055e-22.  The number should decrease as the scan progresses, starting at something like 0.015.  
+  \item \texttt{DROPBLK} should be 0.  If it increases, there is data being lost, and there are probably other processes running that should be killed.\end{itemize}
+ \item\label{st:ltrh} Check sizes of files written to disk: \\
+ \texttt{cd /data[n]/[UNAME]/AGBT17B\_325/[YYYYMMDD]/ \\
+ ls -ltrh | tail} \\
+ The [YYYYMMDD] is in UTC, so it may be ``tomorrow" from your perspective.  The \texttt{tail} command will show you the last 10 lines from the preceding \texttt{ls} command.  \\
+ The output should look like 
+ ``\texttt{-rw-\dots 5.7G Mar 31 22:14 guppi\dots\,GBNCC\dots\_0001.fits}" (with information where the ``\dots" are; times 10). \\
+ If any of the files (besides the last one, which is in progress) is considerably less than 5.7G, it is a partial observation, and should be excluded in section~\ref{ssec:rsync}. If several files are too small, there is something \textit{seriously} wrong, and you should call Scott (Sec.~\ref{sec:con}). 
+ \item To view the bandpass (flux vs. frequency for a small chunk of time), in a \textit{beef} tab, type: \\
+ \texttt{guppi\_monitor} \\
+ This should look something like Figure~\ref{fig:mon}, with as few large spikes as possible.  This can only be run when data is being taken, and the script will die if the scan finishes before the plot is closed.  Do not run this for very long.  
+ \item You can view weather information in Astrid, under ``GbtStatus", or using the ``Weather" tool in ``Cleo" (doesn't always work).  The operator will let you know if the winds are too high and you need to stop observing (see Sec.~\ref{ssec:weath}). 
+ \item The ``Scheduler \& SkyView" tool in ``Cleo" is also helpful, especially for checking what test sources are observable.  \begin{itemize}
+  \item For basic usage, click [Real Time], and you can see what part of the sky is visible at that moment (to the telescope).  
+  \item The pink circle with the cross indicates where the telescope is pointing, with the actual coordinates printed on the right side of the window.  
+  \item In the bottom right corner of the left panel, the sky coordinates for the location of the cursor are displayed as you move the cursor around.  You can use those to find the coordinates of a test source, if it's up.  For example, if the LST of the telescope is approximately 10:00, a source at 1045-04 would be just to the left of center, towards the bottom of the circle (see Fig.~\ref{fig:ssv}). \end{itemize}
+\end{enumerate}
+
+
+%%%%%%%%%%%%%
+\subsection{Possible Problems} \label{ssec:prob}  %%%%%%%%% Section 6.2 %%%%%%%%%
+\textit{If you run into something new and bizarre, contact Scott Ransom (see Sec.~\ref{sec:con}) to fix it, and add it to this list.}
+\begin{enumerate}
+\item If this is the first observing run for a new (authorized) observer, the observer should communicate with the operator about being entered into Astrid's database and the Gateway, before the session is scheduled to begin.  If the operator is unable to enter the information (possibly due to permissions for the observer's account):   \begin{itemize}
+\item Contact another authorized observer immediately.  They will need to, at minimum, open a new tab, ssh into {\it titania} or {\it beef} using their username and open Cleo, and ssh into \textit{titania} to open Astrid.  The session would then be run under their name.  
+\item Email Scott Ransom to get authorization for observing.  
+\end{itemize}
+
+\item\label{st:slew} If the telescope doesn't slew before prompting you to check {\bf guppi\_adc\_hist}, there is likely a problem with the antenna.  You should ask the operator if everything looks fine on their end, and they will let you know if you simply need to restart Astrid, or if the problem is something much larger that needs to be resolved on their end.  
+
+\item\label{st:gah} If something looks wrong in the \textbf{guppi\_adc\_hist}: 
+\indent Tell the operator there is something wrong with GUPPI.  They will likely need to contact Scott to fix the problem.  Once the problem is resolved, resubmit the scheduling block and recheck \textbf{guppi\_adc\_hist} to confirm the problem has been resolved. 
+
+\item If a problem comes up in the middle of a session, after the problem is resolved: \begin{enumerate}
+\item Check Astrid observing log to see the scan number done last. 
+\item Edit catalog file to comment out (adding `\#' at the beginning of the appropriate line) pointings you've already observed. 
+\item Resubmit \textbf{C\_run\_survey} scheduling block.  
+\end{enumerate}
+
+\end{enumerate}
+
+
+%%%%%%%%%
+\subsection{What to Do in Case of Bad Weather}\label{ssec:weath}  %%%%%%%%% Section 6.3 %%%%%%%%%
+You can monitor the wind speed and cloud coverage through Astrid, under ``Observation Management".  If the operator stops your observation due to high wind or bad weather (e.g., freezing rain), and make note of the current pulsar being observed. 
+
+\noindent Wait for permission to restart the observation.  Check Astrid observing log to see the scan number done last. \\
+Edit the scan number in the \textbf{C\_run\_survey} scheduling block to begin after the last pointing (which was interrupted).  If you're stowed for more than around 30 minutes, estimate the number of pointings to skip, assuming 2\,min per pointing, and add that to the scan number. \\
+In some cases (e.g., if you're stowed for several hours), it may be best to make a new catalog, following section~\ref{ssec:cat}: \begin{itemize}
+\item using the LST from Astrid (in the ``GbtStatus" tab), 
+\item using the time left in your session for the length, and
+\item adding a (or changing the) minuscule letter in the file name.  \end{itemize}
+Change the file name in the \textbf{C\_run\_survey} scheduling block, but leave the scan number as 0.
+
+When given the go-ahead by the operator, re-submit the scheduling block. 
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Working with Another Observer}\label{sec:share} %%%%%%%%%%%%%% Section 7 %%%%%%%%%%%%%%
+
+%%%%%%%%%
+\subsection{If Another Observer Starts the Session} %%%%%%%%% Section 7.1 %%%%%%%%%
+
+ \subsubsection{If Using the In-Browser VNC} \begin{itemize}
+ \item Contact the previous observer at least 15 minutes before they hand off the observation to you. Ask them to send you the link from the webpage that allows others to control the VNC viewer (see section \ref{sssec:hndoff} on how to obtain this link).
+ \item Once connected to the VNC viewer, click the button at the top of the page which shows the current users. Click the bubble next to your name in order to give yourself control of the VNC viewer. 
+ \item Use comments (lines preceded by \#'s) in the terminal to greet the previous observer and ask how the session has gone.  
+ \item Inform the operator that you will be taking over the observation and give the previous observer your phone number in case of emergencies.  
+
+ Note: Although more than one person can view the VNC viewer, only the person whose name is checked can control it.
+\end{itemize}
+
+ \subsubsection{If Using a Traditional VNC} \begin{itemize}
+ \item Before the Hand-Off \\
+ Contact the previous observer to get the VNC information: \textit{titania} (or \textit{euclid}) desktop number, and password.  Follow the VNC instructions in section~\ref{sec:vnc}, skipping section~\ref{ssec:vnc}, using this information.  
+
+ \item Start Observing \\
+ Use comments (lines preceded by \#'s) in the terminal to greet the previous observer and ask how the session has gone.  \\
+ Inform the operator that you will be taking over the observation and give them your phone number in case of emergencies.  \\
+ Monitor the observation as described above, and end the observation as shown below.  \\
+ If you need to open new tabs and, for example, ssh into \textit{beef}: \\
+ \texttt{ssh -X [UNAME]@beef} \\
+ with your username, and enter your password. 
+\end{itemize}
+
+
+%%%%%%%%%
+\subsection{If You Start the Session} %%%%%%%%% Section 7.2 %%%%%%%%%
+
+ \subsubsection{If Using the In-Browser VNC} \begin{itemize} \label{sssec:hndoff}
+  \item Navigate to the option towards the bottom right of the ``My Sessions'' page that says \newline
+[Sharing Keys]. 
+  \item Check the option that says ``Enable Sharing''. After that, select the option that pops up saying ``Anyone with this link can control the session''. 
+  \item Copy the link and send it to the next observer---this will allow them to connect to your VNC server.
+  \item When they arrive, they will move the cursor and start typing in a terminal window (using \#'s to make comments).  Let them know of any problems, and time lost.  
+  \item Stop Observing: \\
+ Close your VNC window, and your terminal window.  \\
+ Email the observer who took over with the obs.\,log you started.  They will make sure it gets onto the Wiki.  
+  \end{itemize}
+
+ \subsubsection{If Using a Traditional VNC} \begin{itemize}
+ \item While Observing \\
+ Email the observer who will take over from you, letting them know what VNC server you're on (e.g., titania:5) and what your VNC password is.  Do this more than 15 minutes before they're scheduled to take over.  \\
+ When they arrive, they will move the cursor and start typing in a terminal window (using \#'s to make comments).  Let them know of any problems, and time lost.  
+
+ \item Stop Observing \\
+ Close your VNC window, and your terminal window.  
+\end{itemize}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Ending an Observing Session}  %%%%%%%%%%%%%% Section 8 %%%%%%%%%%%%%%
+\textit{Skip this section if another observer finishes the session.}
+
+Sometimes the observation following a session is delayed or cancelled, usually due to technical difficulties.  In these cases, communicate with the operator to determine whether or not your session can continue past the scheduled end.  A catalog typically has enough pointings for at least 30 extra minutes of observing, or more if test sources are added.  
+
+To find out how many pointings are left in your catalog: \begin{enumerate} 
+ \item Open a terminal tab. 
+ \item \texttt{cd /users/sransom/GBNCC/}
+ \item \texttt{cat catalogs/GBNCC\_[YYYYMMDDa].cat | wc -l} \\
+ This command will look at the catalog file you made at the beginning of the observation, and use the \texttt{wc -l} command to count the number of lines.  This number, minus 1 for the header, is the number of pointings possible with that catalog.  \end{enumerate}
+
+
+%%%%%%%%%
+\subsection{Abort Observing}\label{ssec:abort}\begin{enumerate}  %%%%%%%%% Section 8.1 %%%%%%%%%
+ \item The \textbf{C\_run\_survey} scheduling block will not automatically stop.  To end, click [Abort] while the Telescope is slewing to a new pointing, if you have less than 2 minutes of time left.  If you abort after the last pointing is started, a partial observation will be created. 
+ \item In Astrid, click the ``Observation Management" tab, then go offline via [File] then [Real Time Mode] and check work offline.  Close Astrid.  
+ \item Tell the operator that you are done.  Close ``Cleo" and associated tools. 
+ \item To make .observed file, in terminal tab from section~\ref{ssec:mon}, step~\ref{st:ltrh}, type: \\
+ \texttt{/bin/ls -altr *GBNCC*fits > /users/sransom/GBNCC/[YYYYMMDDa].observed} \\
+ Use minuscule letters (a, b, c, etc.) to differentiate sessions on the same day. 
+ \item Edit .observed file to remove partial observations. Type: \\
+ \texttt{emacs /users/sransom/GBNCC/[YYYYMMDD].observed} \\
+ Remove any partials due to problems during the session. Save and close file. 
+\end{enumerate}
+
+
+%%%%%%%%%
+\subsection{Move Data}\label{ssec:rsync}  %%%%%%%%% Section 8.2 %%%%%%%%%
+If there is no GBNCC session for a few hours (around half the length of the session you ran), move the data following steps~\ref{st:rscv} and \ref{st:rsynct}. \textit{Note:} Sometimes, the server at Charlottesville is too full, so you should follow steps~\ref{st:rsgb} and \ref{st:rsynct}. In general, data should be moved to Charlottesville, and not within Green Bank. When in doubt, do not start an rsync, and email the group asking for up-to-date instructions.  \begin{enumerate}
+ \item\label{st:rscv} Moving data to Charlottesville: \begin{enumerate}
+  \item Open a new terminal tab
+  \item \texttt{ssh zuul05} \\
+  Enter password
+  \item Check data present (to avoid writing over anything):\\
+  \texttt{cd /lustre/cv/projects/GBNCC \\
+  ls} 
+  \item\textit{If there are partial files to remove}: \\
+  Find scan number(s) for file(s) (e.g., for ``guppi\_57470\_GBNCC86803\_0045\_0001.fits", [NUM] is 0045). \\
+  Add \texttt{--exclude "guppi$^*$\_[NUM]$^*$fits"} (with quotation marks around the file name) to the rsync command (below) between \texttt{rsync -avuxP} and \texttt{beef\dots} \\
+  You can add this phrase multiple times to exclude multiple files.  
+  \item If the directory [YYYYMMDD] (the date of your session) exists: \\
+  \texttt{mkdir [YYYYMMDDa]} \\
+  e.g., 20160323b (increment minuscule letter as needed). \\
+  \texttt{chmod 1777 [YYYYMMDDa] \\ 
+  cd [YYYYMMDDa] \\
+  rsync -avuxP beef.gb.nrao.edu::data[n]/[UNAME]/AGBT17B\_325/[YYYYMMDD]/$^*$\,.} \\
+  which copies all contents of your original directory into the new directory on \textit{zuul05}.    \textit{Don't forget the period at the end of the line.}
+  \item If that directory doesn't exist: \\
+  \texttt{rsync -avuxP beef.gb.nrao.edu::data[n]/[UNAME]/AGBT17B\_325/[YYYYMMDD]\,.} \\
+  which copies your original directory onto \textit{zuul05}.    \textit{Don't forget the period at the end of the line.}
+  \end{enumerate}
+ \item\label{st:rsgb} Moving data at Green Bank: (Only if step~\ref{st:rscv} could absolutely not be performed.)\begin{enumerate}
+  \item In a {\it beef} terminal tab, type: \\
+  {\tt cd /data[n]/[UNAME]/AGBT17B\_325/}
+  \item\label{st:gbminu} If your .observed file required a minuscule letter to differentiate it from a previous observation {\it and} the start time was before 19:00 EST, you will need to change your directory name in order to avoid overwriting data.  Type: \\
+  {\tt mv [YYYYMMDD] [YYYYMMDDa]} \\
+  where {\tt [a]} is the minuscule letter used with your .observed file.  
+  \item\textit{If there are partial files to remove}: \\
+  Find scan number(s) for file(s) (e.g., for ``guppi\_57470\_GBNCC86803\_0045\_0001.fits", [NUM] is 0045). \\
+  Add \texttt{--exclude "guppi$^*$\_[NUM]$^*$fits"} (with quotation marks around the file name) to the rsync command (below) between \texttt{rsync -avuxP} and \texttt{[YYYYMMDDa]\dots} \\
+  You can add this phrase multiple times to exclude multiple files.  
+  \item {\tt rsync -auvxP [YYYYMMDDa] euclid-10::lustre/pulsar/survey/AGBT09C\_057/} \\
+  where [YYYYMMDDa] is the correct directory name, whether step~\ref{st:gbminu} was required or not.  There is no period at the end of that rsync command.  
+  \end{enumerate}
+ \item\label{st:rsynct} With either server, the data transfer will take some time.  Do not close the terminal window or tab until it finishes.  \\
+ Feel free to close your VNC window before the rsync finishes, but do not move on to section~\ref{ssec:kill} until it is finished. 
+\end{enumerate}
+
+Send an email to the GBNCC group summarizing the session (time lost, test sources observed, etc.), and let them know if the rsync is finished or needs to be started by someone else.  If the rsync was started but has not finished, let them know what data directory (\texttt{data[n]}) you used.  
+
+
+%%%%%%%%%
+\subsection{Kill the VNC}\label{ssec:kill}  %%%%%%%%% Section 8.3 %%%%%%%%%
+\textit{Skip this step if you worked with another observer during any part of the session.} \begin{itemize}
+\item For In-Browser VNC:
+ \begin{enumerate}
+  \item Kill the VNC by choosing ``terminate session'' on the appropriate session window.
+  \end{enumerate}
+  \item For Traditional VNC:
+  \begin{enumerate} 
+\item  Kill the vncserver, using a local terminal logged into \textit{titania} (or \textit{euclid}), by typing: \\
+\indent\texttt{vncserver -kill :[n]} \\
+Here [n] refers to your vnc server number. \\
+\item Type \texttt{exit} to log out of \textit{titania}, and close your local terminal. 
+  \end{enumerate}
+\end{itemize}
+
+\noindent If you accidentally kill the VNC after handing off to another observer, don't panic---follow the steps below:  \begin{itemize}
+ \item Contact the other observer (via email or phone) right away. 
+ \item Reopen the VNC (see Sec.~\ref{sec:vnc}). 
+ \item Open Cleo in a terminal tab, and confirm with the operator that the observation is still running. 
+ \item Follow the steps in section~\ref{ssec:astrid} to open Astrid, but check ``Work online with control of the telescope" and do not bother editing the scheduling blocks.  Simply enter the correct information under the ``Run" tab.  
+ \item When the telescope moves to the next scan, the log in Astrid should begin updating.  If several minutes pass without any update, check in with the operator. 
+ \item Communicate (through the terminal) with the other observer to confirm that they are good to take over.  
+ \item Close your VNC window, and \textit{do not kill the VNC in your terminal}.  
+\end{itemize}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Contacts}\label{sec:con}  %%%%%%%%%%%%%% Section 9 %%%%%%%%%%%%%%
+\begin{itemize}
+ \item GBT Operator: (304-456-2341)
+ \item (Primary Contact) Scott Ransom: \href{mailto:sransom@nrao.edu}{sransom@nrao.edu} or (434-284-2604)
+ \item Ryan Lynch: \href{mailto:rlynch@nrao.edu}{rlynch@nrao.edu} or (717-823-1585)
+% \item Paul Demorest: \href{mailto:pdemores@nrao.edu}{pdemores@nrao.edu} or (510-468-6803)
+\end{itemize}
+\newpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Figures}  %%%%%%%%%%%%%% Section 10 %%%%%%%%%%%%%%
+\begin{figure}[h]
+ \centering
+  \scalebox{0.42}{\includegraphics{ScreenShotguppi_adc_hist.png}}
+  \caption{Example ``good" histogram from \textbf{guppi\_adc\_hist}.  Each line comes from a different polarization, and some differences should be expected.}
+  \label{fig:gah}
+\end{figure}
+
+\vspace{2cm}
+\begin{figure}[h]
+ \centering
+  \scalebox{0.38}{\includegraphics{Screenshot_guppi_mon.png}}
+  \caption{Example plot from \textbf{guppi\_monitor}. Red solid line indicates average (over the last second or so) flux per frequency channel, and blue dashed line indicates minimum and maximum values (also for the last second or so).}
+  \label{fig:mon}
+\end{figure}
+
+\begin{figure}[h]
+ \centering
+  \scalebox{0.6}{\includegraphics{ScreenShotScanCoord.png}}
+  \caption{Scan Coordinator, showing the status of various telescope systems, including a false alarm in the IFRack status.}
+  \label{fig:sc}
+\end{figure}
+
+\begin{figure}[h]
+ \centering
+  \scalebox{0.7}{\includegraphics{ScreenShotGuppiStatus.png}}
+  \caption{Output from \textbf{guppi\_status}, showing various typical values.  \texttt{TRK\_MODE}, \texttt{BACKEND}, \texttt{OBS\_MODE}, \texttt{NETSTAT}, and \texttt{DAQSTATE} rarely change values during an observation (some change briefly between scans).  \texttt{DATADIR} should not change during an observation, and should be the directory where the data is written.  \texttt{DISKSTAT}, \texttt{DROPAVG}, and \texttt{DROPBLK} can be used to check that all is running properly, as described in section~\ref{ssec:mon}.}
+  \label{fig:gps}
+\end{figure}
+
+\begin{figure}[h]
+ \centering
+  \scalebox{0.6}{\includegraphics{ScreenShotSkyView.png}}
+  \caption{Scheduler \& SkyView, with the cursor showing the approximate position of J1045-04.  The red curve shows the galaxy, and the black curve shows the Declination of the telescope.}
+  \label{fig:ssv}
+\end{figure}
+
+
+
+
+\end{document}  
+
